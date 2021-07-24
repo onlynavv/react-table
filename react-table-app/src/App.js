@@ -29,6 +29,7 @@ function App() {
     const fieldValue = e.target.value
 
     const newEditFormData = {...editFormData, [fieldName]:fieldValue }
+    console.log(newEditFormData)
     setEditFormData(newEditFormData)
   }
 
@@ -51,9 +52,31 @@ function App() {
     setEditFormData(getOldValue)
   },[editId])
 
-  const handleEditSave = (e) => {
+  const handleEditFormSubmit = (e) => {
     e.preventDefault();
-    // console.log(id)
+    console.log(editFormData)
+    // setContacts([...contacts,editFormData])
+    setContacts(contacts.map((contact)=>{
+      if(contact.id === editId){
+        return {...contact,fullName:editFormData.fullName,address:editFormData.address,email:editFormData.email,phoneNumber:editFormData.phoneNumber}
+      }
+      else{
+        return contact
+      }
+    }))
+    setEditId('')
+  }
+
+  const handleDelete = (id) => {
+    const newContacts = [...contacts]
+
+    const index = newContacts.findIndex((contact)=>{
+      return contact.id === id
+    })
+
+    newContacts.splice(index,1)
+
+    setContacts(newContacts)
   }
 
   return (
@@ -73,7 +96,7 @@ function App() {
           {contacts.map((contact)=>{
             return(
               <>
-                {editId === contact.id ? <EditTableRow handleEditForm={handleEditForm} {...editFormData} handleEditSave={handleEditSave} /> : <ReadOnlyRow key={contact.id} {...contact} handleEdit={handleEdit} />}
+                {editId === contact.id ? <EditTableRow handleEditForm={handleEditForm} {...editFormData} handleEditFormSubmit={handleEditFormSubmit} /> : <ReadOnlyRow key={contact.id} {...contact} handleEdit={handleEdit} handleDelete={handleDelete} />}
               </>
             )
           })}

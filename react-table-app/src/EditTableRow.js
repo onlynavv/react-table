@@ -1,6 +1,6 @@
 import React from 'react'
 
-const EditTableRow = ({id,handleEditForm,fullName,address,phoneNumber,email,handleEditSave}) => {
+const EditTableRow = ({handleEditForm,fullName,address,phoneNumber,email,handleEditFormSubmit}) => {
     
     return (
         <tr>
@@ -16,7 +16,7 @@ const EditTableRow = ({id,handleEditForm,fullName,address,phoneNumber,email,hand
             <td>
                 <input type='text' value={email} name='email' placeholder='enter email' onChange={handleEditForm}></input>
             </td>
-            <td><button onClick={()=>handleEditSave(id)}>save</button></td>
+            <td><button onClick={handleEditFormSubmit}>save</button></td>
         </tr>
     )
 }
